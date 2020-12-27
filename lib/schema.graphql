@@ -1,0 +1,55 @@
+enum Level {
+  Beginner
+  Intermediate
+  Advanced
+}
+
+union Search = Course | Teacher
+
+type Course {
+  _id: ID!
+  title: String!
+  description: String!
+  topic: String 
+  teacher: Teacher
+  level: Level
+}
+
+interface Person{
+  _id: ID!
+  name: String!
+  email: String
+
+}
+
+type Teacher implements Person{
+  _id: ID!
+  name: String!
+  email: String
+}
+
+input PersonInput {
+  _id: ID!
+  name: String!
+  email: String
+}
+
+input CourseInput {
+  title: String!,
+  description: String!,
+  topic: String
+}
+
+type Query{
+  "Devuelve todos los cursos"
+  courses: [Course]
+  "Devuelve un curso individual filtrado por id"
+  course(id: ID!): Course
+  "Ejecuta una busqueda global"
+  searchItems(keyword: String!): Search
+}
+
+type Mutation {
+  "Crea un curso"
+  createCourse(input: CourseInput!): Course
+}
